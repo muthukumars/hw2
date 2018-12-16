@@ -1,0 +1,30 @@
+3. Critical Thinking (2 points total)
+Modify this ReadMe file to answer the following questions directly in place.
+	
+
+1) Kaggle changes links/ file locations/login process/ file content
+
+[Muthukumar] Kaggle changed the way how to download the files. it requires us to generate JSON file and download
+	
+2) We run out of space on HD / local permissions issue - can't save files
+
+[Muthukumar]  when we implemented Jupyter, we ran out permission for /notebooks directory.  Linux works as owner group and world permissions. we gave 757 then it worked. we were able to access through http://ipaddress:8888 and create notebook files.  we could probably do security SSL enabling and also authentication method so that not everyone can access. we can also restrict corporate users only to access the specific ipaddress:8888. more security can be implemented which is beyond the scope of this exercize. 
+	
+3) Someone updated python packages and there is unintended effect (functions retired or act differently)
+
+[Muthukumar] I did not face this because this instances is specific to us. 
+	
+4) Docker issues - lost internet within docker due to some ip binding to vm or local routing issues( I guess this falls under lost internet, but I am talking more if docker is the cause rather then ISP)
+
+
+I faced so many issues with docker.
+a. first, I have used docker machine to deploy the docker images. 
+b. then i faced docker python3_starter was not accessible outside of the instance.
+c. nc -v to dockermachine 8888 -was connecting when we were inside the machine. we did nc -v localhost 8888, that worked. then we did nc -v 127.0.0.1 8888, that worked. however, from my laptop, when I did nc -v ipaddress 8888 , then it did not work. so I realzied that the issue is related to exposing to outside. 
+d. I have created a new firewall rules to keep 8888 port open. still could not connect
+e. then I have created a network tag to keep all ports open. still it was an issue.
+f. I have made allow_host=* in notebook, still could not connect
+g. in this, docker container crashed. so I had to use docker rm to remove container and docker rmi to remove images. 
+h. then I moved my docker-machine from my laptop to instance itself. 
+i. finally, I installed nginx which is reverse proxy, then it worked fine
+
